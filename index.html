@@ -10,17 +10,38 @@
 <body>
   <script type="text/x-handlebars">
     <h2>Statskeeper</h2>
-
     {{outlet}}
   </script>
 
-
   <script type="text/x-handlebars" id="index">
-    <ul>
-    {{#each item in model}}
-      <li>{{item}}</li>
-    {{/each}}
-    </ul>
+  <div class='container'>
+    <div class="row">
+      <div class="col-md-4">
+        <ul>
+        {{#each item in model}}
+          <li>{{item}}</li>
+        {{/each}}
+        </ul>
+        {{#link-to 'newTeam'}}Add Team{{/link-to}}
+      </div>
+      <div class="col-md-4">
+        {{outlet}}
+      </div>
+      <div class="col-md-4">
+      </div>
+    </div>
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="newTeam">
+  <h1>New Team</h1>
+  <form>
+    <div class="form-group">
+      <label for='team'>Team</label>
+      {{input type='text' id='team' class='form-control' value=team}}
+    </div>
+    <button {{action createTeam}} class='btn btn-default'>Create Team</button>
+  </form>
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>
@@ -29,5 +50,6 @@
   <script src="js/app.js"></script>
   <!-- to activate the test runner, add the "?test" query string parameter -->
   <script src="tests/runner.js"></script>
+
 </body>
 </html>
