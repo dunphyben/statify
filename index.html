@@ -13,13 +13,14 @@
     {{outlet}}
   </script>
 
-  <script type="text/x-handlebars" id="index">
+  <script type="text/x-handlebars" data-template-name="teams">
   <div class='container'>
     <div class="row">
       <div class="col-md-4">
         <ul>
-        {{#each team in controller}}
-          <li>{{#link-to 'showTeam' team}}{{team.city}} {{team.name}}{{/link-to}}</li>
+        {{#each team in controller itemController='team'}}
+          <li>{{#link-to 'showTeam' team}}{{team.city}} {{team.name}}{{/link-to}}
+              <button {{action deleteTeam}} class="btn btn-danger btn-xs">Delete</button></li>
         {{/each}}
         </ul>
         {{#link-to 'newTeam'}}Add Team{{/link-to}}
@@ -51,6 +52,11 @@
     <div class='col-md-6'>
       <h2>{{city}} {{name}}</h2>
       {{#link-to 'newPlayer'}}Add Player{{/link-to}}
+      <ul>
+        {{#each player in controller itemController='player'}}
+          <li>{{player.lastName}}, {{player.firstName}}</li>
+        {{/each}}
+      </ul>
     </div>
     <div class='col-md-6'>
     {{outlet}}
@@ -71,6 +77,16 @@
       </div>
       <button {{action createPlayer}} class='btn btn-default'>Create Player</button>
     </form>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="showPlayer">
+    <div class='col-md-6'>
+      <h2>{{firstName}} {{lastName}}</h2>
+      {{#link-to 'newPlayer'}}Add Player{{/link-to}}
+    </div>
+    <div class='col-md-6'>
+    {{outlet}}
+    </div>
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>

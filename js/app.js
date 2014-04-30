@@ -7,7 +7,7 @@ App.ApplicationAdapter = DS.LSAdapter.extend({
 });
 
 App.Router.map(function() {
-  this.resource('index', { path: '/' }, function() {
+  this.resource('teams', { path: '/' }, function() {
     this.resource('newTeam', { path: '/teams/new' });
     this.resource('showTeam', { path: '/teams/:id' }, function() {
       this.resource('newPlayer', { path: '/players/new' });
@@ -26,23 +26,19 @@ App.Player = DS.Model.extend({
 });
 
 
-App.IndexRoute = Ember.Route.extend({
-  model: function() {
-    return this.store.find('team');
-  }
-});
-
 App.ShowTeamRoute = Ember.Route.extend({
   model: function() {
     return this.store.find('team');
   }
 });
 
+
 App.TeamsRoute = Ember.Route.extend({
   model: function() {
     return this.store.find('team');
   }
 });
+
 
 App.NewTeamRoute = Ember.Route.extend({
   model: function() {
@@ -56,6 +52,16 @@ App.newPlayerRoute = Ember.Route.extend({
   }
 });
 
+App.TeamController = Ember.ObjectController.extend({
+  actions: {
+    deleteTeam: function() {
+      if (confirm('Lifetime ban?')) {
+        this.get('model').destroyRecord();
+      }
+    }
+  }
+});
+
 App.NewTeamController = Ember.ObjectController.extend({
   actions:{
     createTeam: function() {
@@ -64,7 +70,7 @@ App.NewTeamController = Ember.ObjectController.extend({
 
       model.save()
       .then(function() {
-        controller.transitionToRoute('index');
+        controller.transitionToRoute('teams');
       })
       .catch(function() {
         alert("Please fix the problems as noted.")
@@ -72,3 +78,21 @@ App.NewTeamController = Ember.ObjectController.extend({
     }
   }
 });
+
+App.NewPlayerController = Ember.ObjectController.extend({
+  actions:{
+    createPlayer: function() {
+      var model = this.get('model');
+      var controller = this;
+
+      model.save()
+      .then(function() {
+        controller.transitionToRoute('players');
+      })
+      .catch(function() {
+        alert("Please fix the problems as noted.")
+      });
+    }
+  }
+});
+
