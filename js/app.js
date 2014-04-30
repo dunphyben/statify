@@ -15,15 +15,19 @@ App.Router.map(function() {
   });
 });
 
+
+App.Player = DS.Model.extend({
+  firstName: DS.attr('string'),
+  lastName: DS.attr('string'),
+  team: DS.belongsTo('team')
+});
+
 App.Team = DS.Model.extend({
+  player: DS.hasMany('player'),
   city: DS.attr('string'),
   name: DS.attr('string')
 });
 
-App.Player = DS.Model.extend({
-  firstName: DS.attr('string'),
-  lastName: DS.attr('string')
-});
 
 
 App.ShowTeamRoute = Ember.Route.extend({
@@ -36,6 +40,12 @@ App.ShowTeamRoute = Ember.Route.extend({
 App.TeamsRoute = Ember.Route.extend({
   model: function() {
     return this.store.find('team');
+  }
+});
+
+App.PlayersRoute = Ember.Route.extend({
+  model: function() {
+    return this.store.find('player');
   }
 });
 
