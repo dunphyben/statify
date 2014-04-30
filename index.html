@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Ember Starter Kit</title>
+  <title>Statify</title>
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -18,8 +18,8 @@
     <div class="row">
       <div class="col-md-4">
         <ul>
-        {{#each item in model}}
-          <li>{{item}}</li>
+        {{#each team in controller}}
+          <li>{{team.city}} {{team.name}}</li>
         {{/each}}
         </ul>
         {{#link-to 'newTeam'}}Add Team{{/link-to}}
@@ -37,16 +37,23 @@
   <h1>New Team</h1>
   <form>
     <div class="form-group">
-      <label for='team'>Team</label>
-      {{input type='text' id='team' class='form-control' value=team}}
+      <label for='city'>City</label>
+      {{input type='text' id='city' class='form-control' value=city}}
+    </div>
+    <div class="form-group">
+      <label for='name'>Name</label>
+      {{input type='text' id='name' class='form-control' value=name}}
     </div>
     <button {{action createTeam}} class='btn btn-default'>Create Team</button>
   </form>
+  <p>{{city}} {{name}}</p>
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>
   <script src="js/libs/handlebars-1.1.2.js"></script>
   <script src="js/libs/ember-1.5.1.js"></script>
+  <script src="js/libs/ember-data.js"></script>
+  <script src="js/libs/localstorage_adapter.js"></script>
   <script src="js/app.js"></script>
   <!-- to activate the test runner, add the "?test" query string parameter -->
   <script src="tests/runner.js"></script>

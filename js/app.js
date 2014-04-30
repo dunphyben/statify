@@ -2,24 +2,50 @@ App = Ember.Application.create({
   LOG_TRANSITIONS: true
 });
 
+App.ApplicationAdapter = DS.LSAdapter.extend({
+  namespace: 'statify-emberjs'
+});
+
 App.Router.map(function() {
   this.resource('index', { path: '/' }, function() {
     this.resource('newTeam', { path: '/teams/new' });
   });
 });
 
+App.Team = DS.Model.extend({
+  city: DS.attr('string'),
+  name: DS.attr('string')
+});
+
+
 App.IndexRoute = Ember.Route.extend({
   model: function() {
-    return ['Bulls', 'Blazers'];
+    return this.store.find('team');
   }
 });
 
+App.TeamsRoute = Ember.Route.extend({
+  model: function() {
+    return this.store.find('team');
+  }
+});
+
+App.NewTeamRoute = Ember.Route.extend({
+  model: function() {
+    return this.store.createRecord('team');
+  }
+});
 
 App.NewTeamController = Ember.ObjectController.extend({
   actions:{
     createTeam: function() {
       var model = this.get('model');
-      model.save();
+      var controller = this;
+
+      model.save()
+      .then(function() {
+        controller.transitionToRoute('index');
+      });
     }
   }
-})
+});
