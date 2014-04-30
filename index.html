@@ -19,7 +19,7 @@
       <div class="col-md-4">
         <ul>
         {{#each team in controller}}
-          <li>{{team.city}} {{team.name}}</li>
+          <li>{{#link-to 'showTeam' team}}{{team.city}} {{team.name}}{{/link-to}}</li>
         {{/each}}
         </ul>
         {{#link-to 'newTeam'}}Add Team{{/link-to}}
@@ -47,6 +47,10 @@
     <button {{action createTeam}} class='btn btn-default'>Create Team</button>
   </form>
   <p>{{city}} {{name}}</p>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="showTeam">
+    <h2>{{city}} {{name}}</h2>
   </script>
 
   <script src="js/libs/jquery-1.10.2.js"></script>

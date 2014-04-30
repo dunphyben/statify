@@ -9,6 +9,7 @@ App.ApplicationAdapter = DS.LSAdapter.extend({
 App.Router.map(function() {
   this.resource('index', { path: '/' }, function() {
     this.resource('newTeam', { path: '/teams/new' });
+    this.resource('showTeam', { path: '/teams/:id' })
   });
 });
 
@@ -19,6 +20,12 @@ App.Team = DS.Model.extend({
 
 
 App.IndexRoute = Ember.Route.extend({
+  model: function() {
+    return this.store.find('team');
+  }
+});
+
+App.ShowTeamRoute = Ember.Route.extend({
   model: function() {
     return this.store.find('team');
   }
@@ -45,6 +52,9 @@ App.NewTeamController = Ember.ObjectController.extend({
       model.save()
       .then(function() {
         controller.transitionToRoute('index');
+      })
+      .catch(function() {
+        alert("Please fix the problems as noted.")
       });
     }
   }
