@@ -29,7 +29,6 @@ App.Team = DS.Model.extend({
 });
 
 
-
 App.ShowTeamRoute = Ember.Route.extend({
   model: function() {
     return this.store.find('team');
@@ -56,7 +55,7 @@ App.NewTeamRoute = Ember.Route.extend({
   }
 });
 
-App.newPlayerRoute = Ember.Route.extend({
+App.NewPlayerRoute = Ember.Route.extend({
   model: function() {
     return this.store.createRecord('player');
   }
@@ -90,18 +89,18 @@ App.NewTeamController = Ember.ObjectController.extend({
 });
 
 App.NewPlayerController = Ember.ObjectController.extend({
+  needs: 'team',
+  team: Ember.computed.alias('controllers.team'),
+
   actions:{
     createPlayer: function() {
+      var playerTeam = this.get('team').get('model');
+      console.log(this.get('team').get('model'));
       var model = this.get('model');
       var controller = this;
-
-      model.save()
-      .then(function() {
-        controller.transitionToRoute('players');
-      })
-      .catch(function() {
-        alert("Please fix the problems as noted.")
-      });
+      model.save();
+      playerTeam.get('player').pushObject(model);
+      controller.transitionToRoute('team', team);
     }
   }
 });

@@ -53,7 +53,7 @@
       <h2>{{city}} {{name}}</h2>
       {{#link-to 'newPlayer'}}Add Player{{/link-to}}
       <ul>
-        {{#each player in this.players}}
+        {{#each player in model.players}}
           <li>{{player.lastName}}, {{player.firstName}}</li>
         {{/each}}
       </ul>
